@@ -1,27 +1,49 @@
 @import "tailwindcss";
 
-/* ── Ledger / case-file design tokens ─────────────────────────────────── */
+/* ── Dev-Hub Design Tokens ─────────────────────────────────────────────── */
 :root {
-  --color-paper: #e8ece3;
-  --color-panel: #fbfaf5;
-  --color-ink: #1a2421;
-  --color-ink-muted: #5c6b64;
-  --color-hairline: #c9cebf;
-  --color-accent: #2f6f5e;
-  --color-amber: #a8792a;
+  /* Surfaces */
+  --color-bg: #0f0f0f;
+  --color-surface: #1a1a1a;
+  --color-surface-raised: #222222;
+  --color-surface-overlay: #2a2a2a;
+
+  /* Text */
+  --color-ink: #f0f0f0;
+  --color-ink-muted: #9ca3af;
+  --color-ink-subtle: #6b7280;
+
+  /* Borders */
+  --color-line: #2d2d2d;
+  --color-line-strong: #3f3f3f;
+
+  /* Accent — orange (princesinghdev palette) */
+  --color-accent: #f97316;
+  --color-accent-dim: rgba(249, 115, 22, 0.12);
+  --color-accent-hover: #ea6c0a;
+
+  /* Status */
+  --color-green: #22c55e;
+  --color-amber: #f59e0b;
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04);
+  --shadow-card-hover: 0 4px 16px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);
 }
 
 /* ── Base ──────────────────────────────────────────────────────────────── */
 html {
-  background-color: var(--color-paper);
+  background-color: var(--color-bg);
   color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 body {
   min-height: 100dvh;
-  font-family: var(--font-ibm-plex-sans), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  background-color: var(--color-bg);
 }
 
 /* ── Selection ─────────────────────────────────────────────────────────── */
@@ -30,18 +52,72 @@ body {
   color: #fff;
 }
 
-/* ── Scrollbar (subtle, ledger-feel) ──────────────────────────────────── */
+/* ── Scrollbar ─────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--color-paper); }
-::-webkit-scrollbar-thumb { background: var(--color-hairline); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-ink-muted); }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-line-strong); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-ink-subtle); }
 
-/* ── Staggered fade-up utility (used by SummaryPanel) ─────────────────── */
+/* ── Animations ─────────────────────────────────────────────────────────── */
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
 .animate-fade-up {
-  animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease forwards;
+}
+
+.animate-slide-in {
+  animation: slide-in-left 0.3s ease forwards;
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ── Card base ──────────────────────────────────────────────────────────── */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-line-strong);
+}
+
+/* ── Tag / badge base ──────────────────────────────────────────────────── */
+.tag {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 11px;
+  line-height: 1;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--color-line-strong);
+  color: var(--color-ink-muted);
+  background: var(--color-surface-overlay);
+  white-space: nowrap;
 }
